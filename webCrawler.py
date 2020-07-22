@@ -15,7 +15,8 @@ FILE_NAME = 'Job Ad Info.json'
 
 def job_spider_indeed(search_term, province, city, num_days_ago_posted):
     url = 'https://ca.indeed.com/jobs?q=' + search_term.replace(' ', '%20') + '&l=' + \
-          city.replace(' ', '%20') + ',%20' + province + '&fromage=' + str(num_days_ago_posted)
+          city.replace(' ', '%20') + ',%20' + province + '&fromage=' + str(num_days_ago_posted) + \
+            '&radius=0'
     src_code = requests.get(url)
     plain_text = src_code.text
     soup = BeautifulSoup(plain_text, 'html.parser')
