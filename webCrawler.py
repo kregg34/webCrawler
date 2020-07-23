@@ -6,16 +6,16 @@ from datetime import datetime, timedelta
 
 job_search_terms = ["Software developer", "software engineer", "programmer", "Java", "Python", "software internship",
                     "software junior", "software entry level"]
-job_cities = ["Moncton", "Saint John"]
+job_cities = ["Moncton", "Saint John", "Shediac", "Fredericton", "Sussex"]
 job_province = "NB"
-num_days_posted = 21
+num_days_posted = 7
 
 FILE_NAME = 'Job Ad Info.json'
 
 
 def job_spider_indeed(search_term, province, city, num_days_ago_posted):
     url = 'https://ca.indeed.com/jobs?q=' + search_term.replace(' ', '%20') + '&l=' + \
-          city.replace(' ', '%20') + ',%20' + province + '&fromage=' + str(num_days_ago_posted) + \
+            city.replace(' ', '%20') + ',%20' + province + '&fromage=' + str(num_days_ago_posted) + \
             '&radius=0'
     src_code = requests.get(url)
     plain_text = src_code.text
@@ -49,10 +49,12 @@ def add_to_json(job_title, job_company, days_ago_posted, date_posted, city):
     else:
         with open(FILE_NAME) as f:
             data = json.load(f)
+            f.close()
 
         with open(FILE_NAME, 'w') as f:
             data.append(new_ad)
             json.dump(data, f)
+            f.close()
 
         print('Job title: ' + job_title + '\nCompany: ' + job_company + '\nDate posted: ' +
               date_posted + '\nCity: ' + city + '\nPosted: ' + days_ago_posted + '\n')
@@ -61,6 +63,7 @@ def add_to_json(job_title, job_company, days_ago_posted, date_posted, city):
 def job_already_exists(ad):
     with open(FILE_NAME) as f:
         data = json.load(f)
+        f.close()
 
     for existing_ad in data:
         if existing_ad["Job title"] == ad["Job title"]:
