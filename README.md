@@ -1,5 +1,5 @@
 # webCrawler
-A simple web crawler for indeed.ca to quickly list all job ad info.
+A simple web crawler for indeed.ca to quickly list all job ad info. It uses BeautifulSoup to parse the HTML.
 
 The program takes as input: Any number of cities, any number of search terms, a province, and the max age of the ad (in days).
 
